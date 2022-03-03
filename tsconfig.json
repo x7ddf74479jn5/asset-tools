@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "scripts",
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": false,
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules", "dist", "scripts"],
+  "include": ["**/*.ts", "**/*.js", "**/*.mjs", "**/*.mts"]
+}
