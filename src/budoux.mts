@@ -7,7 +7,7 @@ import path from "path";
 $.verbose = false;
 
 import { progressTracker } from "./progress.mjs";
-import { REPOSITORY } from "./constant.mjs";
+import { REPOSITORY } from "./constants.mjs";
 
 const budoux = "node_modules/budoux/bin/budoux.js";
 const prettier = "node_modules/prettier/bin-prettier.js";

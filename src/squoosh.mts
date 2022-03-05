@@ -2,7 +2,7 @@
 
 import "zx/globals";
 
-import { PRESET_WIDTH } from "./constant.mjs";
+import { PRESET_WIDTHS } from "./constants.mjs";
 
 const squoosh = "node_modules/@squoosh/cli/src/index.js";
 const INPUT_DIR = "assets/squoosh";
@@ -67,7 +67,7 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
   console.log("Resizing...");
 
   const { t, w } = argv;
-  const target = t ? t : await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTH });
+  const target = t ? t : await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTHS });
 
   const parseTarget = async (target: string) => {
     const re = /(?<dimension>[wh])(?<value>1?[0-9]{1,3})/;

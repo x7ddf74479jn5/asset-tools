@@ -4,12 +4,11 @@ import "zx/globals";
 import path from "path";
 import dayjs from "dayjs";
 
-import { PRESET_WIDTH } from "./constant.mjs";
-
+import { PRESET_WIDTHS } from "./constants.mjs";
 const INPUT_DIR = "assets/ffmpeg";
 const OUTPUT_DIR = "dist/ffmpeg";
-const VIDEO_EXTENSION = ["avi", "mp4", "wmv", "mpg", "mkv", "flv", "mov"];
-const AUDIO_EXTENSION = ["mp3", "flac", "wav", "aac"];
+const VIDEO_EXTENSIONS = ["avi", "mp4", "wmv", "mpg", "mkv", "flv", "mov"];
+const AUDIO_EXTENSIONS = ["mp3", "flac", "wav", "aac"];
 
 const getTime = (hour: string, minute: string, second: string) => {
   return dayjs(`2022-01-01 ${hour}:${minute}:${second}`);
@@ -18,7 +17,7 @@ const getTime = (hour: string, minute: string, second: string) => {
 const includeVideos = async () => {
   console.log("Including videos...");
 
-  const videos = await glob(`${INPUT_DIR}/*.{${VIDEO_EXTENSION.join(",")}}`);
+  const videos = await glob(`${INPUT_DIR}/*.{${VIDEO_EXTENSIONS.join(",")}}`);
 
   if (videos.length === 0) {
     console.error(
@@ -48,7 +47,7 @@ const resize = async (videos: string[]) => {
   console.log("Resizing...");
 
   const { t, f } = argv;
-  const target = t || (await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTH }));
+  const target = t || (await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTHS }));
   let targetExt = f || (await question("Convert into?(e.g. mp4): "));
 
   const getScaleOption = async (target: string) => {
@@ -75,7 +74,7 @@ const resize = async (videos: string[]) => {
   const validateExtension = () => {
     // blank indicates default value
     if (targetExt === "") return true;
-    return VIDEO_EXTENSION.includes(targetExt);
+    return VIDEO_EXTENSIONS.includes(targetExt);
   };
 
   if (!validateExtension()) {
@@ -99,7 +98,7 @@ const convert = async (videos: string[]) => {
   const targetExt = f || (await question("Convert into?(e.g. mp4): "));
 
   const validateExtension = () => {
-    return VIDEO_EXTENSION.includes(targetExt);
+    return VIDEO_EXTENSIONS.includes(targetExt);
   };
 
   if (!validateExtension()) {
@@ -155,12 +154,12 @@ const clip = async (videos: string[]) => {
   }
 
   let targetExt =
-    f || (await question("Type target extension(e.g. mp4), if blank will not covert: ", { choices: VIDEO_EXTENSION }));
+    f || (await question("Type target extension(e.g. mp4), if blank will not covert: ", { choices: VIDEO_EXTENSIONS }));
 
   const validateExtension = () => {
     // blank indicates default value
     if (targetExt === "") return true;
-    return VIDEO_EXTENSION.includes(targetExt);
+    return VIDEO_EXTENSIONS.includes(targetExt);
   };
 
   if (!validateExtension()) {
@@ -206,11 +205,11 @@ const extractAudio = async (videos: string[]) => {
   let targetExt =
     f ||
     (await question("Type target extension(e.g. mp4), if blank will not covert(maybe aac): "),
-    { choices: AUDIO_EXTENSION });
+    { choices: AUDIO_EXTENSIONS });
   targetExt ||= "aac";
 
   const validateExtension = () => {
-    return AUDIO_EXTENSION.includes(targetExt);
+    return AUDIO_EXTENSIONS.includes(targetExt);
   };
 
   if (!validateExtension()) {
