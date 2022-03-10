@@ -39,7 +39,7 @@
     "zx": "5.2.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc -p tsconfig.json",
     "squoosh-optimize": "esmo src/squoosh.mts --mode optimize",
     "squoosh-resize": "esmo src/squoosh.mts --mode resize",
     "svgr": "esmo src/svgr.mts",

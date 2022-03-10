@@ -11,8 +11,8 @@ import { REPOSITORY } from "./constants.mjs";
 
 const budoux = "node_modules/budoux/bin/budoux.js";
 const prettier = "node_modules/prettier/bin-prettier.js";
-const INPUT_DIR = "assets/budoux";
-const OUTPUT_DIR = "dist/budoux";
+const INPUT_DIR = argv.test ? "tests/assets/budoux" : "assets/budoux";
+const OUTPUT_DIR = argv.test ? "tests/dist/budoux" : "dist/budoux";
 const OUTPUT_FILE = `${OUTPUT_DIR}/output.json`;
 const progress = progressTracker();
 
@@ -52,16 +52,18 @@ const setup = async () => {
     process.exit(1);
   }
 
+  if (argv.debug) return;
+
   progress.setStatus("🧹Cleaning output directory...");
   fs.emptyDirSync(OUTPUT_DIR);
 };
 
-const run = async (files: string[]) => {
+const runBudouX = async (files: string[]) => {
   progress.setStatus("BudouX running...");
 
   let done = 0;
 
-  const result = await Promise.all(
+  let result = await Promise.all(
     files.map(async (filePath) => {
       const file = path.basename(filePath);
       const phrases = await getPhrases(filePath);
@@ -69,6 +71,16 @@ const run = async (files: string[]) => {
       if (phrases.length === 0) {
         console.warn(chalk.yellow(`☁️ Texts are not found in "${filePath}"`));
         return;
+      }
+
+      if (argv.debug) {
+        const cmd = phrases.reduce((acc, phrase, index) => {
+          const _cmd = `${budoux} ${phrase} -H`;
+          acc[index] = _cmd;
+          return acc;
+        }, {} as Record<string, string>);
+
+        return { file, cmd };
       }
 
       const segmentedPhrases = await Promise.all(
@@ -82,9 +94,19 @@ const run = async (files: string[]) => {
 
       return { file, phrases: segmentedPhrases };
     })
-  ).then((results) => results.filter((result): result is BudouXResult => result !== undefined));
+  );
 
-  return result;
+  if (argv.debug) {
+    result = result.filter(Boolean);
+    console.log(`[Debug] Input args: ${JSON.stringify(argv)}`);
+    console.log(`[Debug] Actual commands: ${JSON.stringify(result)}`);
+    progress.finish("🏁 Debug end");
+    process.exit(0);
+  }
+
+  result = result.filter((r): r is BudouXResult => Boolean(r?.file) && Boolean(r?.phrases));
+
+  return result as BudouXResult[];
 };
 
 const formatOutput = async () => {
@@ -121,12 +143,12 @@ const outputJson = async (file: string, list: BudouXResult[]) => {
   }
 };
 
-const main = async () => {
+export const main = async () => {
   progress.setStatus("🏁 Start!");
 
   await setup();
   const files = await includeFiles();
-  const result = await run(files);
+  const result = await runBudouX(files);
   await outputJson(OUTPUT_FILE, result);
 
   progress.finish("🏁 End with success!");

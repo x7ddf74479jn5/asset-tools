@@ -5,6 +5,8 @@
 ```shell
 Usage:
     yarn svgr       SVGからReact TypeScript Componentに変換
+Options:
+    --debug         dry-run
 ```
 
 ## Reference

@@ -2,11 +2,12 @@
 
 import "zx/globals";
 
+import { debugOutput, debugRun } from "./utils.mjs";
 import { progressTracker } from "./progress.mjs";
 
 const svgr = "node_modules/@svgr/cli/bin/svgr";
-const INPUT_DIR = "assets/svgr";
-const OUTPUT_DIR = "dist/svgr";
+const INPUT_DIR = argv.test ? "tests/assets/svgr" : "assets/svgr";
+const OUTPUT_DIR = argv.test ? "tests/dist/svgr" : "dist/svgr";
 const TEMPLATE = "src/templates/template.js";
 const INDEX_TEMPLATE = "src/templates/index-template.js";
 const progress = progressTracker();
@@ -33,13 +34,24 @@ const setup = async () => {
     process.exit(1);
   }
 
+  if (argv.debug) return;
+
   progress.setStatus("🧹Cleaning output directory...");
   fs.emptyDirSync(OUTPUT_DIR);
 };
 
 const run = async () => {
   progress.setStatus("SVGR running...");
-  await $`${svgr} --typescript --template ${TEMPLATE} --index-template ${INDEX_TEMPLATE} -d ${OUTPUT_DIR} -- ${INPUT_DIR}`;
+
+  if (argv.debug) {
+    const result = debugRun(
+      INPUT_DIR,
+      `${svgr} --typescript --template ${TEMPLATE} --index-template ${INDEX_TEMPLATE} -d ${OUTPUT_DIR} -- ${INPUT_DIR}`
+    );
+    debugOutput(result);
+  } else {
+    await $`${svgr} --typescript --template ${TEMPLATE} --index-template ${INDEX_TEMPLATE} -d ${OUTPUT_DIR} -- ${INPUT_DIR}`;
+  }
 };
 
 const main = async () => {

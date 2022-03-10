@@ -5,8 +5,9 @@ import path from "path";
 import dayjs from "dayjs";
 
 import { PRESET_WIDTHS } from "./constants.mjs";
-const INPUT_DIR = "assets/ffmpeg";
-const OUTPUT_DIR = "dist/ffmpeg";
+import { debugOutput, debugRun } from "./utils.mjs";
+const INPUT_DIR = argv.test ? "tests/assets/ffmpeg" : "assets/ffmpeg";
+const OUTPUT_DIR = argv.test ? "tests/dist/ffmpeg" : "dist/ffmpeg";
 const VIDEO_EXTENSIONS = ["avi", "mp4", "wmv", "mpg", "mkv", "flv", "mov"];
 const AUDIO_EXTENSIONS = ["mp3", "flac", "wav", "aac"];
 
@@ -38,6 +39,8 @@ const setup = async () => {
     fs.mkdir(INPUT_DIR);
     process.exit(1);
   }
+
+  if (argv.debug) return;
 
   console.log("🧹Cleaning output directory...");
   fs.emptyDirSync(OUTPUT_DIR);
@@ -82,13 +85,22 @@ const resize = async (videos: string[]) => {
     process.exit(1);
   }
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const { name, ext } = path.parse(filePath);
       targetExt ||= ext.slice(1);
+
+      if (argv.debug) {
+        return debugRun(filePath, `ffmpeg -i ${filePath} -vf ${scaleOption} ${OUTPUT_DIR}/${name}.${targetExt}`);
+      }
+
       await $`ffmpeg -i ${filePath} -vf ${scaleOption} ${OUTPUT_DIR}/${name}.${targetExt}`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 const convert = async (videos: string[]) => {
@@ -106,12 +118,21 @@ const convert = async (videos: string[]) => {
     process.exit(1);
   }
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const filename = path.basename(filePath, path.extname(filePath));
+
+      if (argv.debug) {
+        return debugRun(filePath, `ffmpeg -i ${filePath} ${OUTPUT_DIR}/${filename}.${targetExt}`);
+      }
+
       await $`ffmpeg -i ${filePath} ${OUTPUT_DIR}/${filename}.${targetExt}`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 const clip = async (videos: string[]) => {
@@ -167,13 +188,22 @@ const clip = async (videos: string[]) => {
     process.exit(1);
   }
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const { name, ext } = path.parse(filePath);
       targetExt ||= ext.slice(1);
+
+      if (argv.debug) {
+        return debugRun(filePath, `ffmpeg -i ${filePath} -ss ${ss} -to ${to} ${OUTPUT_DIR}/${name}${targetExt}`);
+      }
+
       await $`ffmpeg -i ${filePath} -ss ${ss} -to ${to} ${OUTPUT_DIR}/${name}${targetExt}`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 /* 
@@ -190,12 +220,24 @@ MP4（H264形式、AAC音声）をサポート。
 const twitter = async (videos: string[]) => {
   console.log("Optimizing for Twitter...");
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const filename = path.basename(filePath, path.extname(filePath));
+
+      if (argv.debug) {
+        return debugRun(
+          filePath,
+          `ffmpeg -i ${filePath} -pix_fmt yuv420p -vcodec h264 -acodec aac -strict experimental ${OUTPUT_DIR}/${filename}.mp4`
+        );
+      }
+
       await $`ffmpeg -i ${filePath} -pix_fmt yuv420p -vcodec h264 -acodec aac -strict experimental ${OUTPUT_DIR}/${filename}.mp4`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 const extractAudio = async (videos: string[]) => {
@@ -219,12 +261,24 @@ const extractAudio = async (videos: string[]) => {
 
   const format = targetExt === "aac" ? "copy" : targetExt;
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const filename = path.basename(filePath, path.extname(filePath));
+
+      if (argv.debug) {
+        return debugRun(
+          filePath,
+          `ffmpeg -i ${filePath} -vn -acodec ${format}  ${OUTPUT_DIR}/${filename}.${targetExt}`
+        );
+      }
+
       await $`ffmpeg -i ${filePath} -vn -acodec ${format}  ${OUTPUT_DIR}/${filename}.${targetExt}`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 const gif = async (videos: string[]) => {
@@ -233,12 +287,24 @@ const gif = async (videos: string[]) => {
   const { fps } = argv;
   const _fps = fps || 10;
 
-  await Promise.all(
+  const result = await Promise.all(
     videos.map(async (filePath) => {
       const filename = path.basename(filePath, path.extname(filePath));
+
+      if (argv.debug) {
+        return debugRun(
+          filePath,
+          `ffmpeg -i ${filePath} -filter_complex "[0:v] fps=${_fps},split [a][b];[a] palettegen [p];[b][p] paletteuse"  ${OUTPUT_DIR}/${filename}.gif`
+        );
+      }
+
       await $`ffmpeg -i ${filePath} -filter_complex "[0:v] fps=${_fps},split [a][b];[a] palettegen [p];[b][p] paletteuse"  ${OUTPUT_DIR}/${filename}.gif`;
     })
   );
+
+  if (argv.debug) {
+    debugOutput(result);
+  }
 };
 
 const main = async () => {

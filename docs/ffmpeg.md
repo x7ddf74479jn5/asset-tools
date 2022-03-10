@@ -22,6 +22,7 @@ Usage:
 
 Options:
     --mode          convert/resize/clip/twitter/extract-audio/gif
+    --debug         dry-run
 [resize]
     -f              変換したい形式拡張子(e.g. mp4)
     -t              リサイズの基準となる軸と目標値(e.g. w720)

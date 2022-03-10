@@ -3,10 +3,11 @@
 import "zx/globals";
 
 import { PRESET_WIDTHS } from "./constants.mjs";
+import { debugOutput, debugRun } from "./utils.mjs";
 
 const squoosh = "node_modules/@squoosh/cli/src/index.js";
-const INPUT_DIR = "assets/squoosh";
-const OUTPUT_DIR = "dist/squoosh";
+const INPUT_DIR = argv.test ? "tests/assets/squoosh" : "assets/squoosh";
+const OUTPUT_DIR = argv.test ? "tests/dist/squoosh" : "dist/squoosh";
 const encOption = "auto";
 
 const includeImages = async () => {
@@ -31,7 +32,8 @@ const setup = async () => {
     process.exit(1);
   }
 
-  // progress.setStatus("🧹Cleaning output directory...");
+  if (argv.debug) return;
+
   console.log("🧹Cleaning output directory...");
   fs.emptyDirSync(OUTPUT_DIR);
 };
@@ -86,35 +88,65 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
 
   const parsed = await parseTarget(target);
   const resizeOption = JSON.stringify(parsed);
+  let result = {};
 
   if (w) {
-    await $`${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+    if (argv.debug) {
+      result = debugRun(
+        INPUT_DIR,
+        `${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`
+      );
+    } else {
+      await $`${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+    }
   } else {
-    await Promise.all(
+    result = await Promise.all(
       images.map(async ({ encoder, images }) => {
         if (images.length > 0) {
+          if (argv.debug) {
+            return debugRun(
+              INPUT_DIR,
+              `${squoosh} --resize ${resizeOption} --${encoder} ${encOption} -d ${OUTPUT_DIR} ${images}`
+            );
+          }
           await $`${squoosh} --resize ${resizeOption} --${encoder} ${encOption} -d ${OUTPUT_DIR} ${images}`;
         }
       })
     );
+  }
+
+  if (argv.debug) {
+    debugOutput(result);
   }
 };
 
 const optimize = async (images: Array<{ encoder: string; images: string[] }>) => {
   console.log("Optimizing...");
 
-  const { webp: shouldConvertWebp } = argv;
+  const { w } = argv;
+  let result = {};
 
-  if (shouldConvertWebp) {
-    await $`${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+  if (w) {
+    if (argv.debug) {
+      result = debugRun(INPUT_DIR, `${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`);
+    } else {
+      await $`${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+    }
   } else {
-    await Promise.all(
+    result = await Promise.all(
       images.map(async ({ encoder, images }) => {
         if (images.length > 0) {
+          if (argv.debug) {
+            return debugRun(INPUT_DIR, `${squoosh} --${encoder} ${encOption} -d ${OUTPUT_DIR} ${images}`);
+          }
           await $`${squoosh} --${encoder} ${encOption} -d ${OUTPUT_DIR} ${images}`;
         }
       })
     );
+  }
+
+  if (argv.debug) {
+    debugOutput(result);
   }
 };
 

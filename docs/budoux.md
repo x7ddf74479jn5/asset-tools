@@ -5,6 +5,8 @@
 ```shell
 Usage:
     yarn budoux [options]       テキストファイル内の文字列を整形したHTML文字列へ変換し、JSONとして出力
+Options:
+    --debug         dry-run
 ```
 
 ## Reference
