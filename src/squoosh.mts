@@ -87,7 +87,7 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
   };
 
   const parsed = await parseTarget(target);
-  const resizeOption = JSON.stringify(parsed);
+  const resizeOption = JSON.stringify(parsed, null, 2);
   let result = {};
 
   if (w) {

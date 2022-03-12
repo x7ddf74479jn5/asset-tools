@@ -98,8 +98,8 @@ const runBudouX = async (files: string[]) => {
 
   if (argv.debug) {
     result = result.filter(Boolean);
-    console.log(`[Debug] Input args: ${JSON.stringify(argv)}`);
-    console.log(`[Debug] Actual commands: ${JSON.stringify(result)}`);
+    console.log(`[Debug] Input args: ${JSON.stringify(argv, null, 2)}`);
+    console.log(`[Debug] Actual commands: ${JSON.stringify(result, null, 2)}`);
     progress.finish("🏁 Debug end");
     process.exit(0);
   }
