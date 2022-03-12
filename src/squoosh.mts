@@ -8,12 +8,13 @@ import { debugOutput, debugRun } from "./utils.mjs";
 const squoosh = "node_modules/@squoosh/cli/src/index.js";
 const INPUT_DIR = argv.test ? "tests/assets/squoosh" : "assets/squoosh";
 const OUTPUT_DIR = argv.test ? "tests/dist/squoosh" : "dist/squoosh";
+const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
 const encOption = "auto";
 
 const includeImages = async () => {
   console.log("Including images...");
 
-  const images = await glob(`${INPUT_DIR}/*.{jpg,jpeg,png,webp}`);
+  const images = await glob(`${INPUT_DIR}/*.{${IMAGE_EXTENSIONS.join(",")}}`);
 
   if (images.length === 0) {
     console.error(chalk.red(`🌧 Image files are not found in "${INPUT_DIR}"`));
@@ -88,19 +89,20 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
 
   const parsed = await parseTarget(target);
   const resizeOption = JSON.stringify(parsed, null, 2);
-  let result = {};
 
   if (w) {
+    const _images = images.flatMap(({ images }) => images);
     if (argv.debug) {
-      result = debugRun(
+      const result = debugRun(
         INPUT_DIR,
-        `${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`
+        `${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${_images}`
       );
+      debugOutput(result);
     } else {
-      await $`${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+      await $`${squoosh} --resize ${resizeOption} --webp ${encOption} -d ${OUTPUT_DIR} ${_images}`;
     }
   } else {
-    result = await Promise.all(
+    await Promise.all(
       images.map(async ({ encoder, images }) => {
         if (images.length > 0) {
           if (argv.debug) {
@@ -114,26 +116,23 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
       })
     );
   }
-
-  if (argv.debug) {
-    debugOutput(result);
-  }
 };
 
 const optimize = async (images: Array<{ encoder: string; images: string[] }>) => {
   console.log("Optimizing...");
 
   const { w } = argv;
-  let result = {};
 
   if (w) {
+    const _images = images.flatMap(({ images }) => images);
     if (argv.debug) {
-      result = debugRun(INPUT_DIR, `${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`);
+      const result = debugRun(INPUT_DIR, `${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${_images}`);
+      debugOutput(result);
     } else {
-      await $`${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${INPUT_DIR}`;
+      await $`${squoosh} --webp ${encOption} -d ${OUTPUT_DIR} ${_images}`;
     }
   } else {
-    result = await Promise.all(
+    await Promise.all(
       images.map(async ({ encoder, images }) => {
         if (images.length > 0) {
           if (argv.debug) {
@@ -143,10 +142,6 @@ const optimize = async (images: Array<{ encoder: string; images: string[] }>) =>
         }
       })
     );
-  }
-
-  if (argv.debug) {
-    debugOutput(result);
   }
 };
 
