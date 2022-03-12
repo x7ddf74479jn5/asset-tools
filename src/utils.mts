@@ -10,3 +10,12 @@ export const debugOutput = (result: Record<string, any>) => {
   console.log(`[Debug] Actual commands: ${JSON.stringify(result, null, 2)}`);
   process.exit(0);
 };
+
+export const createHelpLogger = (dict: Record<string, any>) => (mode?: keyof typeof dict) => {
+  if (mode) {
+    console.log(dict[mode]);
+  } else {
+    console.log(dict["base"]);
+  }
+  process.exit(0);
+};

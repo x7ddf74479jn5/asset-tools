@@ -5,7 +5,9 @@ import path from "path";
 import dayjs from "dayjs";
 
 import { PRESET_WIDTHS } from "./constants.mjs";
-import { debugOutput, debugRun } from "./utils.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
+import { ffmpegHelp } from "./help.mjs";
+
 const INPUT_DIR = argv.test ? "tests/assets/ffmpeg" : "assets/ffmpeg";
 const OUTPUT_DIR = argv.test ? "tests/dist/ffmpeg" : "dist/ffmpeg";
 const VIDEO_EXTENSIONS = ["avi", "mp4", "wmv", "mpg", "mkv", "flv", "mov"];
@@ -308,9 +310,15 @@ const gif = async (videos: string[]) => {
 };
 
 const main = async () => {
+  const { mode } = argv;
+
+  if (argv.h || argv.help) {
+    const showHelp = createHelpLogger(ffmpegHelp);
+    showHelp(mode);
+  }
+
   console.log(chalk.cyan("🏁 Start!"));
 
-  const { mode } = argv;
   await setup();
   const videos = await includeVideos();
 

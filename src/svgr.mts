@@ -2,8 +2,9 @@
 
 import "zx/globals";
 
-import { debugOutput, debugRun } from "./utils.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
 import { progressTracker } from "./progress.mjs";
+import { svgrHelp } from "./help.mjs";
 
 const svgr = "node_modules/@svgr/cli/bin/svgr";
 const INPUT_DIR = argv.test ? "tests/assets/svgr" : "assets/svgr";
@@ -55,6 +56,11 @@ const run = async () => {
 };
 
 const main = async () => {
+  if (argv.h || argv.help) {
+    const showHelp = createHelpLogger(svgrHelp);
+    showHelp();
+  }
+
   progress.setStatus("🏁 Start!");
 
   await setup();

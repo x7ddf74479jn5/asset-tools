@@ -8,6 +8,8 @@ $.verbose = false;
 
 import { progressTracker } from "./progress.mjs";
 import { REPOSITORY } from "./constants.mjs";
+import { budouxHelp } from "./help.mjs";
+import { createHelpLogger } from "./utils.mjs";
 
 const budoux = "node_modules/budoux/bin/budoux.js";
 const prettier = "node_modules/prettier/bin-prettier.js";
@@ -144,6 +146,11 @@ const outputJson = async (file: string, list: BudouXResult[]) => {
 };
 
 export const main = async () => {
+  if (argv.h || argv.help) {
+    const showHelp = createHelpLogger(budouxHelp);
+    showHelp();
+  }
+
   progress.setStatus("🏁 Start!");
 
   await setup();

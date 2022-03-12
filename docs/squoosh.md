@@ -10,6 +10,7 @@ Usage:
 Options:
     --mode          optimize/resize
     --debug         dry-run
+    --help, -h      ヘルプ
     -t              リサイズの基準となる軸と目標値(e.g. w720)
     -w              Webp変換フラグ
 ```

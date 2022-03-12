@@ -3,7 +3,8 @@
 import "zx/globals";
 
 import { PRESET_WIDTHS } from "./constants.mjs";
-import { debugOutput, debugRun } from "./utils.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
+import { squooshHelp } from "./help.mjs";
 
 const squoosh = "node_modules/@squoosh/cli/src/index.js";
 const INPUT_DIR = argv.test ? "tests/assets/squoosh" : "assets/squoosh";
@@ -146,9 +147,15 @@ const optimize = async (images: Array<{ encoder: string; images: string[] }>) =>
 };
 
 const main = async () => {
+  const { mode } = argv;
+
+  if (argv.h || argv.help) {
+    const showHelp = createHelpLogger(squooshHelp);
+    showHelp(mode);
+  }
+
   console.log(chalk.cyan("🏁 Start!"));
 
-  const { mode } = argv;
   await setup();
   const includedImages = await includeImages();
   const classifiedImages = await classifyImagesByEncoder(includedImages);
