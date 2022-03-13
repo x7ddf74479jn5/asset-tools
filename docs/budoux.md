@@ -8,6 +8,7 @@ Usage:
 Options:
     --debug         dry-run
     --help, -h      ヘルプ
+    -j              JSX形式に整形する
 ```
 
 ## Reference

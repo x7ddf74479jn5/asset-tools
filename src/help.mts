@@ -64,6 +64,7 @@ export const budouxHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -j              JSX形式に整形する
 
   Reference:
       https://github.com/google/budoux/blob/main/javascript/README.md
