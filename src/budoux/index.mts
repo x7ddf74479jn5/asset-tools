@@ -85,12 +85,12 @@ const runBudouX = async (files: string[]) => {
       const segmentedPhrases = await Promise.all(
         phrases.map(async (phrase) => {
           const processOutput = await $`${budoux} ${phrase} -H`;
-          return (
-            processOutput.stdout
-              .replaceAll(/<wbr>/g, "<wbr />")
-              // コンソール出力末尾の\nを取り除く
-              .replace("\n", "")
-          );
+          const segmented = processOutput.stdout
+            .replaceAll(/<wbr>/g, "<wbr />")
+            .replaceAll('"', "'")
+            // 標準出力末尾の\nを取り除く
+            .replace("\n", "");
+          return { raw: phrase, segmented };
         })
       );
 
@@ -118,7 +118,8 @@ const toJSX = (list: BudouXResult[]) => {
     const replaced = phrases.map((phrase) => {
       const pattern = /<span.*?>/;
       const to = "<span style={{ wordBreak: 'keep-all', overflowWrap: 'break-word' }}>";
-      return phrase.replace(pattern, to);
+      const _replaced = phrase.segmented.replace(pattern, to);
+      return { ...phrase, segmented: _replaced };
     });
     return { file, phrases: replaced };
   });
@@ -126,7 +127,10 @@ const toJSX = (list: BudouXResult[]) => {
 
 type BudouXResult = {
   file: string;
-  phrases: string[];
+  phrases: {
+    raw: string;
+    segmented: string;
+  }[];
 };
 
 type OutputData = {
