@@ -5,10 +5,9 @@ import "zx/globals";
 import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { progressTracker } from "../progress.mjs";
 import { svgrHelp } from "./help.mjs";
+import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
 
 const svgr = "node_modules/@svgr/cli/bin/svgr";
-const INPUT_DIR = argv.test ? "tests/assets/svgr" : "assets/svgr";
-const OUTPUT_DIR = argv.test ? "tests/dist/svgr" : "dist/svgr";
 const TEMPLATE = "src/svgr/template.js";
 const INDEX_TEMPLATE = "src/svgr/index-template.js";
 const progress = progressTracker();

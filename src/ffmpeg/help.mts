@@ -1,7 +1,16 @@
+import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
+import { VIDEO_EXTENSIONS } from "../constants.mjs";
+
+const REFERENCE_URL = "https://www.ffmpeg.org/ffmpeg.html";
+
 export const ffmpegHelp = {
   base: `
   Usage:
       brew install ffmpeg (if you have not installed)
+
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}
 
       yarn ffmpeg-resize [options]
       yarn ffmpeg-convert [options]
@@ -30,11 +39,15 @@ export const ffmpegHelp = {
       -fps            フレームレート(e.g. 40)
   
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html
+      ${REFERENCE_URL}
   `,
   convert: `
   Usage:
       brew install ffmpeg (if you have not installed)
+
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}      
 
       yarn ffmpeg-convert [options]
   
@@ -45,11 +58,15 @@ export const ffmpegHelp = {
       -f              変換したい形式拡張子(e.g. mp4)
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html
+      ${REFERENCE_URL}
   `,
   resize: `
   Usage:
       brew install ffmpeg (if you have not installed)
+
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}    
 
       yarn ffmpeg-resize [options]
 
@@ -61,11 +78,15 @@ export const ffmpegHelp = {
       -t              リサイズの基準となる軸と目標値(e.g. w720)
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html
+      ${REFERENCE_URL}
   `,
   clip: `
   Usage:
       brew install ffmpeg (if you have not installed)
+    
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}      
 
       yarn ffmpeg-clip [options]
 
@@ -78,12 +99,12 @@ export const ffmpegHelp = {
       -e              切り抜き終了時間(e.g. [hh:]mm:ss)
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html  
+      ${REFERENCE_URL}  
   `,
   "extra-audio": `
   [Caution] This is a experimental mode depended on input movies don't work.
-  Input directory: 
-  Output directory:
+  Input directory: ${chalk.green(INPUT_DIR)}
+  Output directory: ${chalk.green(OUTPUT_DIR)}
   Acceptable file formats: mp4
 
   Usage:
@@ -98,11 +119,15 @@ export const ffmpegHelp = {
       -f              変換したい形式拡張子(e.g. mp3)
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html   
+      ${REFERENCE_URL}   
   `,
   gif: `
   Usage:
       brew install ffmpeg (if you have not installed)
+
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}      
 
       yarn ffmpeg-gif [options]
 
@@ -113,11 +138,15 @@ export const ffmpegHelp = {
       -fps            フレームレート(e.g. 40)
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html  
+      ${REFERENCE_URL}  
   `,
   twitter: `
   Usage:
       brew install ffmpeg (if you have not installed)
+
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green(VIDEO_EXTENSIONS.join(", "))}      
 
       yarn ffmpeg-twitter [options]
 
@@ -127,6 +156,6 @@ export const ffmpegHelp = {
       -H              CLIのヘルプ
 
   Reference:
-      https://www.ffmpeg.org/ffmpeg.html  
+      ${REFERENCE_URL}  
   `,
 };

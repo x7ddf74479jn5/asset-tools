@@ -7,9 +7,7 @@ import dayjs from "dayjs";
 import { VIDEO_EXTENSIONS, AUDIO_EXTENSIONS, PRESET_WIDTHS } from "../constants.mjs";
 import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { ffmpegHelp } from "./help.mjs";
-
-const INPUT_DIR = argv.test ? "tests/assets/ffmpeg" : "assets/ffmpeg";
-const OUTPUT_DIR = argv.test ? "tests/dist/ffmpeg" : "dist/ffmpeg";
+import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
 
 const getTime = (hour: string, minute: string, second: string) => {
   return dayjs(`2022-01-01 ${hour}:${minute}:${second}`);

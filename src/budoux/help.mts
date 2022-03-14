@@ -1,6 +1,12 @@
+import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
+
 export const budouxHelp = {
   base: `
   Usage:
+      Input directory: ${chalk.green(INPUT_DIR)}
+      Output directory: ${chalk.green(OUTPUT_DIR)}
+      Acceptable file formats: ${chalk.green("txt")}
+
       yarn budoux [options]       テキストファイル内の文字列を整形したHTML文字列へ変換し、JSONとして出力
 
   Options:
