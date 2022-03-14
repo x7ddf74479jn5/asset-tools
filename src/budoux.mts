@@ -87,7 +87,12 @@ const runBudouX = async (files: string[]) => {
       const segmentedPhrases = await Promise.all(
         phrases.map(async (phrase) => {
           const processOutput = await $`${budoux} ${phrase} -H`;
-          return processOutput.stdout.replaceAll(/<wbr>/g, "<wbr />").replaceAll("\n", "");
+          return (
+            processOutput.stdout
+              .replaceAll(/<wbr>/g, "<wbr />")
+              // コンソール出力末尾の\nを取り除く
+              .replace("\n", "")
+          );
         })
       );
 
