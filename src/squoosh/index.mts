@@ -2,14 +2,13 @@
 
 import "zx/globals";
 
-import { PRESET_WIDTHS } from "../constants.mjs";
+import { IMAGE_EXTENSIONS, PRESET_WIDTHS } from "../constants.mjs";
 import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { squooshHelp } from "./help.mjs";
 
 const squoosh = "node_modules/@squoosh/cli/src/index.js";
 const INPUT_DIR = argv.test ? "tests/assets/squoosh" : "assets/squoosh";
 const OUTPUT_DIR = argv.test ? "tests/dist/squoosh" : "dist/squoosh";
-const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
 const encOption = "auto";
 
 const includeImages = async () => {
