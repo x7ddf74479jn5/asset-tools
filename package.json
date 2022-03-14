@@ -40,15 +40,15 @@
   },
   "scripts": {
     "type-check": "tsc -p tsconfig.json",
-    "squoosh-optimize": "esmo src/squoosh.mts --mode optimize",
-    "squoosh-resize": "esmo src/squoosh.mts --mode resize",
-    "svgr": "esmo src/svgr.mts",
-    "ffmpeg-convert": "esmo src/ffmpeg.mts --mode convert",
-    "ffmpeg-resize": "esmo src/ffmpeg.mts --mode resize",
-    "ffmpeg-clip": "esmo src/ffmpeg.mts --mode clip",
-    "ffmpeg-extract-audio": "esmo src/ffmpeg.mts --mode extract-audio",
-    "ffmpeg-twitter": "esmo src/ffmpeg.mts --mode twitter",
-    "ffmpeg-gif": "esmo src/ffmpeg.mts --mode gif",
-    "budoux": "esmo src/budoux.mts"
+    "squoosh-optimize": "esmo src/squoosh/index.mts --mode optimize",
+    "squoosh-resize": "esmo src/squoosh/index.mts --mode resize",
+    "svgr": "esmo src/svgr/index.mts",
+    "ffmpeg-convert": "esmo src/ffmpeg/index.mts --mode convert",
+    "ffmpeg-resize": "esmo src/ffmpeg/index.mts --mode resize",
+    "ffmpeg-clip": "esmo src/ffmpeg/index.mts --mode clip",
+    "ffmpeg-extract-audio": "esmo src/ffmpeg/index.mts --mode extract-audio",
+    "ffmpeg-twitter": "esmo src/ffmpeg/index.mts --mode twitter",
+    "ffmpeg-gif": "esmo src/ffmpeg/index.mts --mode gif",
+    "budoux": "esmo src/budoux/index.mts"
   }
 }

@@ -1,76 +1,3 @@
-export const squooshHelp = {
-  base: `
-  Usage:
-      yarn squoosh--optimize [options]    JPEG/PNG圧縮/Webp変換
-      yarn squoosh-resize [options]       アスペクト比を維持したリサイズ
-
-  Options:
-      --mode          optimize/resize
-      --debug         dry-run
-      --help, -h      ヘルプ
-      -t              リサイズの基準となる軸と目標値(e.g. w720)
-      -w              Webp変換フラグ
-
-  Reference:
-      https://github.com/GoogleChromeLabs/squoosh/tree/dev/cli
-  `,
-  optimize: `
-  Usage:
-      yarn squoosh--optimize [options]    JPEG/PNG圧縮/Webp変換
-
-  Options:
-      --debug         dry-run
-      --help, -h      ヘルプ
-      -w              Webp変換フラグ
-
-  Reference:
-      https://github.com/GoogleChromeLabs/squoosh/tree/dev/cli
-  `,
-  resize: `
-  Usage:
-      yarn squoosh-resize [options]       アスペクト比を維持したリサイズ
-
-  Options:
-      --debug         dry-run
-      --help, -h      ヘルプ
-      -t              リサイズの基準となる軸と目標値(e.g. w720)
-      -w              Webp変換フラグ
-
-  Reference:
-      https://github.com/GoogleChromeLabs/squoosh/tree/dev/cli
-  `,
-};
-
-export const svgrHelp = {
-  base: `
-  Usage:
-      yarn svgr       SVGからReact TypeScript Componentに変換
-
-  Options:
-      --debug         dry-run
-      --help, -h      ヘルプ
-  
-  Reference:
-      https://react-svgr.com/
-      https://github.com/gregberge/svgr
-  `,
-};
-
-export const budouxHelp = {
-  base: `
-  Usage:
-      yarn budoux [options]       テキストファイル内の文字列を整形したHTML文字列へ変換し、JSONとして出力
-
-  Options:
-      --debug         dry-run
-      --help, -h      ヘルプ
-      -j              JSX形式に整形する
-
-  Reference:
-      https://github.com/google/budoux/blob/main/javascript/README.md
-  `,
-};
-
 export const ffmpegHelp = {
   base: `
   Usage:
@@ -87,6 +14,7 @@ export const ffmpegHelp = {
       --mode          convert/resize/clip/twitter/extract-audio/gif
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
   [resize]
       -f              変換したい形式拡張子(e.g. mp4)
       -t              リサイズの基準となる軸と目標値(e.g. w720)
@@ -113,6 +41,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
       -f              変換したい形式拡張子(e.g. mp4)
 
   Reference:
@@ -127,6 +56,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
       -f              変換したい形式拡張子(e.g. mp4)
       -t              リサイズの基準となる軸と目標値(e.g. w720)
 
@@ -142,6 +72,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
       -f              変換したい形式拡張子(e.g. mp4)
       -s              切り抜き開始時間(e.g. [hh:]mm:ss)
       -e              切り抜き終了時間(e.g. [hh:]mm:ss)
@@ -150,6 +81,11 @@ export const ffmpegHelp = {
       https://www.ffmpeg.org/ffmpeg.html  
   `,
   "extra-audio": `
+  [Caution] This is a experimental mode depended on input movies don't work.
+  Input directory: 
+  Output directory:
+  Acceptable file formats: mp4
+
   Usage:
       brew install ffmpeg (if you have not installed)
 
@@ -158,6 +94,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
       -f              変換したい形式拡張子(e.g. mp3)
 
   Reference:
@@ -172,6 +109,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
       -fps            フレームレート(e.g. 40)
 
   Reference:
@@ -186,6 +124,7 @@ export const ffmpegHelp = {
   Options:
       --debug         dry-run
       --help, -h      ヘルプ
+      -H              CLIのヘルプ
 
   Reference:
       https://www.ffmpeg.org/ffmpeg.html  

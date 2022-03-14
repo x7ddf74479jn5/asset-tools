@@ -6,10 +6,10 @@
 
 ## Feature
 
-- [BudouX](docs/budoux.md): テキスト整形
-- [FFmpeg](docs/ffmpeg.md): 動画変換
-- [Squoosh](docs/squoosh.md): 画像変換
-- [SVGR](docs/svgr.md): SVGをReact Componentに変換
+- [BudouX](src/budoux/README.md): テキスト整形
+- [FFmpeg](src/ffmpeg/README.md): 動画変換
+- [Squoosh](src/squoosh/README.md): 画像変換
+- [SVGR](src/svgr/README.md): SVGをReact Componentに変換
 
 ## Usage
 

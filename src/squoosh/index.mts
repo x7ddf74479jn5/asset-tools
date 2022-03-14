@@ -2,8 +2,8 @@
 
 import "zx/globals";
 
-import { PRESET_WIDTHS } from "./constants.mjs";
-import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
+import { PRESET_WIDTHS } from "../constants.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { squooshHelp } from "./help.mjs";
 
 const squoosh = "node_modules/@squoosh/cli/src/index.js";

@@ -4,8 +4,8 @@ import "zx/globals";
 import path from "path";
 import dayjs from "dayjs";
 
-import { PRESET_WIDTHS } from "./constants.mjs";
-import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
+import { PRESET_WIDTHS } from "../constants.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { ffmpegHelp } from "./help.mjs";
 
 const INPUT_DIR = argv.test ? "tests/assets/ffmpeg" : "assets/ffmpeg";

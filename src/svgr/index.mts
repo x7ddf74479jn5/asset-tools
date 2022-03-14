@@ -2,15 +2,15 @@
 
 import "zx/globals";
 
-import { debugOutput, debugRun, createHelpLogger } from "./utils.mjs";
-import { progressTracker } from "./progress.mjs";
+import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
+import { progressTracker } from "../progress.mjs";
 import { svgrHelp } from "./help.mjs";
 
 const svgr = "node_modules/@svgr/cli/bin/svgr";
 const INPUT_DIR = argv.test ? "tests/assets/svgr" : "assets/svgr";
 const OUTPUT_DIR = argv.test ? "tests/dist/svgr" : "dist/svgr";
-const TEMPLATE = "src/templates/template.js";
-const INDEX_TEMPLATE = "src/templates/index-template.js";
+const TEMPLATE = "src/svgr/template.js";
+const INDEX_TEMPLATE = "src/svgr/index-template.js";
 const progress = progressTracker();
 
 const includeImages = async () => {
