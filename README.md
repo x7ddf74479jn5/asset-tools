@@ -13,7 +13,7 @@
 
 ## Usage
 
-1. assets以下の対応するフォルダーに変換したい画像を入れる。
+1. assets以下の対応するフォルダーに変換したいものを入れる。
 2. スクリプト実行
 3. dist以下の対応するフォルダーに出力。
 
@@ -22,7 +22,3 @@
 google/zx
 
 - <https://github.com/google/zx>
-  
-antfu/esno
-
-- <https://github.com/antfu/esno>

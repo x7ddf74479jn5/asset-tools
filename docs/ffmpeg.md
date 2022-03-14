@@ -13,6 +13,10 @@
 Usage:
     brew install ffmpeg
 
+    Input directory: assets/ffmpeg
+    Output directory: dist/ffmpeg
+    Acceptable file formats: mp4, avi, wmv, mkv, mov
+
     yarn ffmpeg-resize [options]
     yarn ffmpeg-convert [options]
     yarn ffmpeg-clip [options]
@@ -23,7 +27,8 @@ Usage:
 Options:
     --mode          convert/resize/clip/twitter/extract-audio/gif
     --debug         dry-run
-    --help, -h      ヘルプ   
+    --help, -h      ヘルプ
+    -H              CLIのヘルプ
 [resize]
     -f              変換したい形式拡張子(e.g. mp4)
     -t              リサイズの基準となる軸と目標値(e.g. w720)
