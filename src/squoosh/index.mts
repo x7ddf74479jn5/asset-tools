@@ -144,12 +144,22 @@ const optimize = async (images: Array<{ encoder: string; images: string[] }>) =>
   }
 };
 
+const showCliHelp = async () => {
+  const processOutput = await $`${squoosh} -h`;
+  console.log(processOutput.stdout);
+  process.exit(0);
+};
+
 const main = async () => {
   const { mode } = argv;
 
   if (argv.h || argv.help) {
     const showHelp = createHelpLogger(squooshHelp);
     showHelp(mode);
+  }
+
+  if (argv.H) {
+    await showCliHelp();
   }
 
   console.log(chalk.cyan("🏁 Start!"));

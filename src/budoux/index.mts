@@ -152,10 +152,20 @@ const outputJson = async (file: string, list: BudouXResult[]) => {
   }
 };
 
+const showCliHelp = async () => {
+  const processOutput = await $`${budoux} -h`;
+  console.log(processOutput.stdout);
+  process.exit(0);
+};
+
 export const main = async () => {
   if (argv.h || argv.help) {
     const showHelp = createHelpLogger(budouxHelp);
     showHelp();
+  }
+
+  if (argv.H) {
+    await showCliHelp();
   }
 
   progress.setStatus("🏁 Start!");

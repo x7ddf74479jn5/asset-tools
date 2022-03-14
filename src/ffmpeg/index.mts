@@ -305,12 +305,22 @@ const gif = async (videos: string[]) => {
   }
 };
 
+const showCliHelp = async () => {
+  const processOutput = await $`ffmpeg -h`;
+  console.log(processOutput.stdout);
+  process.exit(0);
+};
+
 const main = async () => {
   const { mode } = argv;
 
   if (argv.h || argv.help) {
     const showHelp = createHelpLogger(ffmpegHelp);
     showHelp(mode);
+  }
+
+  if (argv.H) {
+    await showCliHelp();
   }
 
   console.log(chalk.cyan("🏁 Start!"));

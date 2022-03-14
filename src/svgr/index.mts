@@ -54,10 +54,20 @@ const run = async () => {
   }
 };
 
+const showCliHelp = async () => {
+  const processOutput = await $`${svgr}} -h`;
+  console.log(processOutput.stdout);
+  process.exit(0);
+};
+
 const main = async () => {
   if (argv.h || argv.help) {
     const showHelp = createHelpLogger(svgrHelp);
     showHelp();
+  }
+
+  if (argv.H) {
+    await showCliHelp();
   }
 
   progress.setStatus("🏁 Start!");
