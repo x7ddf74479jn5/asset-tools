@@ -14,6 +14,9 @@ export const budouxHelp = {
       --help, -h      ヘルプ
       -H              CLIのヘルプ
       -j              JSX形式に整形する
+      -p              配列形式
+
+  React example: ./BudouX.tsx
 
   Reference:
       https://github.com/google/budoux/blob/main/javascript/README.md
