@@ -100,7 +100,7 @@ const runBudouX = async (files: string[]) => {
 
       if (argv.debug) {
         const cmd = phrases.reduce((acc, phrase, index) => {
-          const _cmd = `${budoux} ${phrase} -H`;
+          const _cmd = `${budoux} ${phrase} ${argv.p ? "" : "-H"}`;
           acc[index] = _cmd;
           return acc;
         }, {} as Record<string, string>);
