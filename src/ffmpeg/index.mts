@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-import "zx/globals";
+import { $, argv, glob, chalk, fs, question } from "zx";
 import path from "path";
 import dayjs from "dayjs";
 

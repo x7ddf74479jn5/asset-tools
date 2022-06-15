@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-import "zx/globals";
+import { $, argv, glob, chalk, fs } from "zx";
 import { promises as fsp } from "fs";
 import path from "path";
 

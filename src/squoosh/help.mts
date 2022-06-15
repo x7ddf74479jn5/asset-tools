@@ -1,3 +1,5 @@
+import { chalk } from "zx";
+
 import { IMAGE_EXTENSIONS } from "src/constants.mjs";
 import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
 

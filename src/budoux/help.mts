@@ -1,3 +1,5 @@
+import { chalk } from "zx";
+
 import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
 
 export const budouxHelp = {

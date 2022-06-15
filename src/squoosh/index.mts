@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-import "zx/globals";
+import { $, argv, glob, chalk, fs, question } from "zx";
 
 import { INPUT_DIR, OUTPUT_DIR } from "./config.mjs";
 import { IMAGE_EXTENSIONS, PRESET_WIDTHS } from "../constants.mjs";

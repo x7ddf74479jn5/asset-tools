@@ -1,6 +1,5 @@
 #!/usr/bin/env zx
-
-import "zx/globals";
+import { $, argv, glob, chalk, fs } from "zx";
 
 import { debugOutput, debugRun, createHelpLogger } from "../utils.mjs";
 import { progressTracker } from "../progress.mjs";
