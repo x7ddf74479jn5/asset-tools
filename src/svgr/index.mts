@@ -14,7 +14,7 @@ const progress = progressTracker();
 const includeImages = async () => {
   progress.setStatus("Including files...");
 
-  const images = await glob(`${INPUT_DIR}/*.svg`);
+  const images = await glob(`${INPUT_DIR}/**/*.svg`);
 
   if (images.length === 0) {
     console.error(chalk.red(`🌧 SVG files are not found in "${INPUT_DIR}"`));

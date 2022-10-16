@@ -18,7 +18,7 @@ const progress = progressTracker();
 const includeFiles = async () => {
   progress.setStatus("Including files...");
 
-  const files = await glob(`${INPUT_DIR}/*.txt`);
+  const files = await glob(`${INPUT_DIR}/**/*.txt`);
 
   if (files.length === 0) {
     console.error(chalk.red(`🌧 Text files are not found in "${INPUT_DIR}"`));
@@ -44,7 +44,7 @@ const getPhrases = async (filePath: string) => {
   }
 };
 
-const setup = async () => {
+const setup = () => {
   if (!fs.pathExistsSync(INPUT_DIR)) {
     console.error(chalk.red(`🌧 Text files must put in "${INPUT_DIR}"`));
     fs.mkdir(INPUT_DIR);

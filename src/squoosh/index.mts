@@ -13,7 +13,7 @@ const encOption = "auto";
 const includeImages = async () => {
   console.log("Including images...");
 
-  const images = await glob(`${INPUT_DIR}/*.{${IMAGE_EXTENSIONS.join(",")}}`);
+  const images = await glob(`${INPUT_DIR}/**/*.{${IMAGE_EXTENSIONS.join(",")}}`);
 
   if (images.length === 0) {
     console.error(chalk.red(`🌧 Image files are not found in "${INPUT_DIR}"`));
@@ -25,7 +25,7 @@ const includeImages = async () => {
   return images;
 };
 
-const setup = async () => {
+const setup = () => {
   if (!fs.pathExistsSync(INPUT_DIR)) {
     console.error(chalk.red(`🌧 Images must put in "${INPUT_DIR}"`));
     fs.mkdir(INPUT_DIR);
@@ -38,7 +38,7 @@ const setup = async () => {
   fs.emptyDirSync(OUTPUT_DIR);
 };
 
-const classifyImagesByEncoder = async (includedImages: string[]) => {
+const classifyImagesByEncoder = (includedImages: string[]) => {
   const jpegImages = includedImages.filter((image) => {
     return image.endsWith(".jpg") || image.endsWith(".jpeg");
   });
@@ -71,7 +71,7 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
   const { t, w } = argv;
   const target = t ? t : await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTHS });
 
-  const parseTarget = async (target: string) => {
+  const parseTarget = (target: string) => {
     const re = /(?<dimension>[wh])(?<value>1?[0-9]{1,3})/;
     const match = re.exec(target);
 
@@ -86,7 +86,7 @@ const resize = async (images: Array<{ encoder: string; images: string[] }>) => {
     return { [dimension]: parseInt(match.groups.value) };
   };
 
-  const parsed = await parseTarget(target);
+  const parsed = parseTarget(target);
   const resizeOption = JSON.stringify(parsed, null, 2);
 
   if (w) {
@@ -159,22 +159,22 @@ const main = async () => {
   }
 
   if (argv.H) {
-    await showCliHelp();
+    showCliHelp();
   }
 
   console.log(chalk.cyan("🏁 Start!"));
 
-  await setup();
+  setup();
   const includedImages = await includeImages();
-  const classifiedImages = await classifyImagesByEncoder(includedImages);
+  const classifiedImages = classifyImagesByEncoder(includedImages);
 
   switch (mode) {
     case "resize": {
-      await resize(classifiedImages);
+      resize(classifiedImages);
       break;
     }
     case "optimize": {
-      await optimize(classifiedImages);
+      optimize(classifiedImages);
       break;
     }
     default: {

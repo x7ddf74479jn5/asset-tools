@@ -16,7 +16,7 @@ const getTime = (hour: string, minute: string, second: string) => {
 const includeVideos = async () => {
   console.log("Including videos...");
 
-  const videos = await glob(`${INPUT_DIR}/*.{${VIDEO_EXTENSIONS.join(",")}}`);
+  const videos = await glob(`${INPUT_DIR}/**/.{${VIDEO_EXTENSIONS.join(",")}}`);
 
   if (videos.length === 0) {
     console.error(
@@ -31,7 +31,7 @@ const includeVideos = async () => {
   return videos;
 };
 
-const setup = async () => {
+const setup = () => {
   if (!fs.pathExistsSync(INPUT_DIR)) {
     console.error(chalk.red(`🌧 Videos must put in "${INPUT_DIR}"`));
     fs.mkdir(INPUT_DIR);
@@ -51,7 +51,7 @@ const resize = async (videos: string[]) => {
   const target = t || (await question("Type target dimension and value(e.g. w720): ", { choices: PRESET_WIDTHS }));
   let targetExt = f || (await question("Convert into?(e.g. mp4): "));
 
-  const getScaleOption = async (target: string) => {
+  const getScaleOption = (target: string) => {
     const re = /(?<dimension>[wh])(?<value>1?[0-9]{1,3})/;
     const match = re.exec(target);
 
@@ -70,7 +70,7 @@ const resize = async (videos: string[]) => {
     return scaleOption;
   };
 
-  const scaleOption = await getScaleOption(target);
+  const scaleOption = getScaleOption(target);
 
   const validateExtension = () => {
     // blank indicates default value
