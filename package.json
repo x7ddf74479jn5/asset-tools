@@ -50,5 +50,8 @@
     "ffmpeg-twitter": "tsx src/ffmpeg/index.mts --mode twitter",
     "ffmpeg-gif": "tsx src/ffmpeg/index.mts --mode gif",
     "budoux": "tsx src/budoux/index.mts"
+  },
+  "volta": {
+    "node": "16.18.0"
   }
 }
